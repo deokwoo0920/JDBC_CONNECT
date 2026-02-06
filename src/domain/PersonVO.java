@@ -23,7 +23,7 @@ public class PersonVO {
     public PersonVO() {
     }
 
-    // 빌드 생성자
+    // 빌드 생성자(id, regDate, modifyDate - DB가 생성)
     public PersonVO(String userId, String userPw, String userName, String userEmail, String phone1, String phone2,
             byte age, String address1, String address2) {
         this.userId = userId;

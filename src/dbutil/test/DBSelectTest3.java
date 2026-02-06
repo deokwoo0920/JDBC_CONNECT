@@ -1,36 +1,32 @@
-package dbutil;
+package dbutil.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import domain.PersonVO;
 
-public class DBSelectTest2 {
+public class DBSelectTest3 {
     public static void main(String[] args) {
-        // Select 동작 확인
         // 연결을 위한 정보 생성
         String url = "jdbc:mysql://localhost:3306/jdbc";
         String user = "jdbcuser";
         String password = "jdbcuser";
 
-        // 1. Connection 객체 생성.
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            // 2. SQL 작성
-            String sql = "select * from person";
+        List<PersonVO> list = new ArrayList<>();
 
-            // 3.Statement 객체 생성, ResultSet 객체 선언(Query 결과 받을 객체)
-            Statement stmt = conn.createStatement();
-            ResultSet rs = null;
-            // 4.SQL을 실행.
-            // Select의 실행은 executeQuery(sql)을 사용함.
-            // ResultSet 객체로 반환합니다.
-            rs = stmt.executeQuery(sql);
-            // 5. 결과 확인
-            List<PersonVO> list = new ArrayList<>();
+        // DB 작업
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "select * from person where id >= ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, 0);
+
+            // SQL 실행
+            ResultSet rs = pstmt.executeQuery();
+            // 결과 처리(ResultSet에 들어간 쿼리를 처리)
             while (rs.next()) { // rs.next() 반환값은 boolean
                 PersonVO vo = new PersonVO(
                         rs.getString("userId"),
@@ -48,11 +44,10 @@ public class DBSelectTest2 {
                 list.add(vo);
 
             }
-            System.out.println(list);
+            list.stream().forEach(System.out::println);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package dbutil;
+package dbutil.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
