@@ -13,7 +13,7 @@ public class DBConnectionTest {
         // 2. 데이터베이스 접속 테스트
         try {
             // 1) 드라이버 로드
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("oracle.jdbc.OracleDriver");
             System.out.println("드라이버 로드 성공");
 
             // 2) 데이터베이스 접속 정보를 담은 Connection 객체를 생성
@@ -23,7 +23,7 @@ public class DBConnectionTest {
             // :3306 -> 포트 번호 (mysql은 포트번호 3306을 기본 포트로 사용)
             // /jdbc -> DB 이름
             conn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/jdbc",
+                    "jdbc:oracle:thin:@//localhost:1521/FREEPDB1",
                     "jdbcuser",
                     "jdbcuser");
             System.out.println(conn);

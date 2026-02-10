@@ -22,4 +22,7 @@ public interface Usermanage {
     // 4. 사용자 삭제
     boolean userDelete(UserDTO userDTO);
 
+    // 5. 사용자 로그인
+    UserDTO login(String userId, String userPw);
+
 }

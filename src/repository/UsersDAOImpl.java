@@ -108,24 +108,23 @@ public class UsersDAOImpl implements Users {
         int result = 0;
         try (Connection conn = DBUtil.getConnection()) {
 
-            String sql = "update person set userId=?, userPw=?, userName=?," +
+            String sql = "update person set userPw=?, userName=?," +
                     "userEmail=?, phone1=?, phone2=?, age=?, address1=?, address2=?" +
-                    ", modifyDate=? where id = ?";
+                    ", modifyDate=now() where id = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, after.getUserId());
-            pstmt.setString(2, after.getUserPw());
-            pstmt.setString(3, after.getUserName());
-            pstmt.setString(4, after.getUserEmail());
-            pstmt.setString(5, after.getPhone1());
-            pstmt.setString(6, after.getPhone2());
-            pstmt.setByte(7, after.getAge());
-            pstmt.setString(8, after.getAddress1());
-            pstmt.setString(9, after.getAddress2());
-            pstmt.setTimestamp(10,
-                    new Timestamp(System.currentTimeMillis()));
-            pstmt.setLong(11, after.getId());
-
+            pstmt.setString(1, after.getUserPw());
+            pstmt.setString(2, after.getUserName());
+            pstmt.setString(3, after.getUserEmail());
+            pstmt.setString(4, after.getPhone1());
+            pstmt.setString(5, after.getPhone2());
+            pstmt.setByte(6, after.getAge());
+            pstmt.setString(7, after.getAddress1());
+            pstmt.setString(8, after.getAddress2());
+            // pstmt.setTimestamp(9,
+            // new Timestamp(System.currentTimeMillis()));
+            pstmt.setLong(9, after.getId());
+            System.out.println(pstmt);
             result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -137,21 +136,21 @@ public class UsersDAOImpl implements Users {
     }
 
     @Override
-    public List<UserVO> userSearch(String userId, String userName) {
+    public Optional<UserVO> login(String userId, String userPw) {
         // sql select , where userId, userName
-        List<UserVO> list = new ArrayList<>();
+        Optional<UserVO> user = null;
 
         try (Connection conn = DBUtil.getConnection()) {
 
             // SQL
-            String sql = "select * from person where userId=? or userName=?";
+            String sql = "select * from person where userId=? and userPw=?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
-            pstmt.setString(2, userName);
+            pstmt.setString(2, userPw);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                list.add(UserVO.builder()
+                user = Optional.of(UserVO.builder()
                         .id(rs.getLong("id"))
                         .userId(rs.getString("userId"))
                         .userPw(rs.getString("userPw"))
@@ -172,7 +171,7 @@ public class UsersDAOImpl implements Users {
             System.out.println(e.getMessage());
         }
 
-        return list;
+        return user;
     }
 
     @Override

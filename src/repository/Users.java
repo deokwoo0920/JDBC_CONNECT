@@ -21,8 +21,8 @@ public interface Users {
     List<UserVO> userAll();
 
     // 2. 조건 조회 - (userid(unique), name),
-    // userid 또는 username에 속한 레코드를 검색.
-    List<UserVO> userSearch(String userId, String userName);
+    // login 처리를 위한 값으로 진행
+    Optional<UserVO> login(String userId, String userPw);
 
     // email(unique처리 안해도 unique)
     Optional<UserVO> userSearch(String userEmail);

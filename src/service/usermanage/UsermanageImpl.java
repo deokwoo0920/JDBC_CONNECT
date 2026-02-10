@@ -46,6 +46,7 @@ public class UsermanageImpl implements Usermanage {
     @Override
     public boolean userModify(UserDTO userDTO) {
         UserVO userVO = UserDTO.toUserVO(userDTO);
+        // System.out.println("서비스(userModify) : " + userVO);
         if (userRepository.userMod(userVO) != 0)
             return true;
         else
@@ -60,6 +61,13 @@ public class UsermanageImpl implements Usermanage {
         else
             return false;
 
+    }
+
+    @Override
+    public UserDTO login(String userId, String userPw) {
+        UserDTO userDTO = UserDTO.toUserDTO(
+                userRepository.login(userId, userPw).get());
+        return userDTO;
     }
 
 }

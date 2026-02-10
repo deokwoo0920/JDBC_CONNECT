@@ -10,7 +10,9 @@ public class DBUtil {
     // method 이름 : getConnection()
 
     // 멤버변수(DB 접속 정보)
-    private static final String url = "jdbc:mysql://localhost:3306/jdbc";
+    private static final String mysqlUrl = "jdbc:mysql://localhost:3306/jdbc";
+    private static final String oracleUrl = "jdbc:oracle:thin:@//localhost:1521/FREEPDB1";
+    private static final String mariadbUrl = "jdbc:mariadb://localhost:3306/jdbc";
     private static final String dbuser = "jdbcuser";
     private static final String password = "jdbcuser";
 
@@ -19,6 +21,7 @@ public class DBUtil {
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("oracle.jdbc.OracleDriver");
         } catch (ClassNotFoundException e) {
             System.out.println("JDBC 드라이버 로드 실패 : " + e.getMessage());
         }
@@ -26,7 +29,7 @@ public class DBUtil {
 
     // 메서드 생성
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, dbuser, password);
+        return DriverManager.getConnection(mysqlUrl, dbuser, password);
     }
 
 }
