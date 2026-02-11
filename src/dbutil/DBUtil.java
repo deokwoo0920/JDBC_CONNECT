@@ -10,9 +10,9 @@ public class DBUtil {
     // method 이름 : getConnection()
 
     // 멤버변수(DB 접속 정보)
-    private static final String mysqlUrl = "jdbc:mysql://localhost:3306/jdbc";
-    private static final String oracleUrl = "jdbc:oracle:thin:@//localhost:1521/FREEPDB1";
-    private static final String mariadbUrl = "jdbc:mariadb://localhost:3306/jdbc";
+    private static final String url = "jdbc:mysql://localhost:3306/jdbc";
+    public static final String ORACLE = "jdbc:oracle:thin:@//localhost:1521/FREEPDB1";
+    public static final String MARIADB = "jdbc:mariadb://localhost:4306/jdbc";
     private static final String dbuser = "jdbcuser";
     private static final String password = "jdbcuser";
 
@@ -29,7 +29,12 @@ public class DBUtil {
 
     // 메서드 생성
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(mysqlUrl, dbuser, password);
+        return DriverManager.getConnection(url, dbuser, password);
+    }
+
+    // url을 통한 연결 Connection 메서드
+    public static Connection getConnection(String url) throws SQLException {
+        return DriverManager.getConnection(url, dbuser, password);
     }
 
 }

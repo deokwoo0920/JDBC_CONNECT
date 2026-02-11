@@ -7,12 +7,20 @@ import domain.users.UserVO;
 import dto.UserDTO;
 import repository.Users;
 import repository.UsersDAOImpl;
+import repository.UsersDAOImplMariadb;
+import repository.UsersDAOImplOracle;
 
 public class UsermanageImpl implements Usermanage {
 
     // DB 작업을 할 수 있는 객체를 호출 작업 진행...
     // 인터페이스를 통한 객체 호출...
-    Users userRepository = new UsersDAOImpl();
+    // Users userRepository = new UsersDAOImpl();
+
+    // Oracle DB
+    // Users userRepository = new UsersDAOImplOracle();
+
+    // MariaDB
+    Users userRepository = new UsersDAOImplMariadb();
 
     @Override
     public List<UserDTO> searchAll() {

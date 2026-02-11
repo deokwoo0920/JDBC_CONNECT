@@ -11,14 +11,26 @@ import dto.OrderDTO;
 import dto.UserDTO;
 import repository.Orders;
 import repository.OrdersDAOImpl;
+import repository.OrdersDAOImplMariadb;
+import repository.OrdersDAOImplOracle;
 import repository.Users;
 import repository.UsersDAOImpl;
+import repository.UsersDAOImplMariadb;
+import repository.UsersDAOImplOracle;
 
 public class OrdermanagImpl implements Ordermanage {
 
     // 서비스 계층에 작업을 위해 필요한 객체들...
-    Users userRepository = new UsersDAOImpl();
-    Orders orderRepository = new OrdersDAOImpl();
+    // Users userRepository = new UsersDAOImpl();
+    // Orders orderRepository = new OrdersDAOImpl();
+
+    // Oracle DB 객체로
+    // Users userRepository = new UsersDAOImplOracle();
+    // Orders orderRepository = new OrdersDAOImplOracle();
+
+    // MariaDB 객체로
+    Users userRepository = new UsersDAOImplMariadb();
+    Orders orderRepository = new OrdersDAOImplMariadb();
 
     @Override
     public boolean createOrder(OrderDTO order, UserDTO userDTO) {
